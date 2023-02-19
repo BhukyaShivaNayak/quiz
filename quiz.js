@@ -1,0 +1,244 @@
+let quiz = [{
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What is the full form of CSS?",
+        option: [
+            "Cascading Style Sheets",
+            "Cascading Style Sheet",
+            "Cartoon Style Sheet",
+            "caston style sheet",
+        ],
+        answer: 1,
+    },
+
+    {
+        question: " What is the full form of HTTP?",
+        option: [
+            "Hypertext Transport Product",
+            "Hypertext Test Protocol",
+            "Hey Transfer protocol",
+            "Hypertext Transfer Protocal",
+        ],
+        answer: 4,
+    },
+
+    {
+        question: " What is the full form of JS?",
+        option: [
+            "JavaScript",
+            "JavaSuper",
+            "Jscrip",
+            "JSON",
+        ],
+        answer: 1,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+    {
+        question: "What does HTML stands for?",
+        option: [
+            "Hyper Tag Markup Language",
+            "Hyper Text Markup Language",
+            "Hyperlinks Text Mark Language",
+            "HyperLinking Text Markinh Language"
+        ],
+        answer: 2,
+    },
+
+
+]
+
+let index = 0;
+let attempt = 0;
+let score = 0;
+let wrong = 0;
+let timeLeft;
+let questions = quiz.sort(function() {
+    return 0.5 - Math.random();
+});
+
+let totalQuestion = questions.length;
+
+
+
+
+// fuction to print question start 
+
+function printQuestion(i) {
+
+
+    $(".questionBox").text(questions[i].question);
+    $(".optionBox span").eq(0).text(questions[i].option[0]);
+    $(".optionBox span").eq(1).text(questions[i].option[1]);
+    $(".optionBox span").eq(2).text(questions[i].option[2]);
+    $(".optionBox span").eq(3).text(questions[i].option[3]);
+}
+
+//function to print question end 
+
+// function to check answer start 
+
+function checkAnswer(option) {
+    attempt++;
+
+    let optionClicked = $(option).data("opt");
+
+    // console.log(questions[index]);
+
+    if (optionClicked == questions[index].answer) {
+        $(option).addClass("right");
+        score++;
+    } else {
+        $(option).addClass("wrong");
+        wrong++;
+    }
+    $(".scoreBox span").text(score);
+
+    $(".optionBox span").attr("onclick", "");
+
+}
+
+//function to check answer end 
+
+// function for result start here 
+function showResult(j) {
+
+    if (j == 1 && index < questions.length - 1 && !confirm("Quiz has not finished yet. Press ok to skip & get your final result.")) {
+
+        return;
+    }
+
+    result();
+}
+
+
+
+//function for result end here
+
+// result function start here
+
+function result() {
+    $("#questionScreen").hide();
+    $("#resultScreen").show();
+
+    $("#totalQuestions").text(totalQuestion);
+    $("#attemptQuestions").text(attempt);
+    $("#correctQuestions").text(score);
+    $("#worngAnswers").text(wrong);
+}
+
+
+// result function ends here
+
+
+//function for the next question start
+
+function showNext() {
+    if (index >= questions.length - 1) {
+        showResult(0);
+        return;
+    }
+    index++;
+
+    $(".optionBox span").removeClass();
+
+    $(".optionBox span").attr("onclick", "checkAnswer(this)");
+
+    printQuestion(index);
+}
+
+
+
+//function for the next questions end
+
+
+
+let ind = 0;
+$(function() {
+    //timer code starts from here
+    let totalTime = 200 //200 seconds for timer
+    let min = 0;
+    let sec = 0;
+    let counter = 0;
+    let timer = setInterval(function() {
+        counter++;
+        min = Math.floor((totalTime - counter) / 60); // calculating  min
+        sec = totalTime - (min * 60) - counter;
+        $(".timerBox span").text(min + ":" + sec);
+        if (counter == totalTime) {
+            alert("Time's up . press ok to show the result.")
+            result();
+            clearInterval(timer);
+        }
+
+    }, 1000); //timer ser for 1 second interval
+
+    //time code ends here
+
+
+    // print question 
+    printQuestion(index);
+});
